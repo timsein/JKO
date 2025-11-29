@@ -527,6 +527,148 @@
       </div>
     </section>
 
+    <!-- Service Area Section -->
+    <section class="service-area" id="service-area">
+      <div class="service-area__bg">
+        <div class="service-area__glow"></div>
+      </div>
+      <div class="container">
+        <header class="section-header">
+          <span class="section-tag">Service Area</span>
+          <h2 class="section-title">Do We Cover Your Area?</h2>
+          <p class="section-subtitle">
+            Enter your zip code to check if we service your location.
+          </p>
+        </header>
+        
+        <div class="service-area__content">
+          <div class="service-area__checker">
+            <div class="zip-checker">
+              <div class="zip-checker__input-wrap">
+                <input 
+                  type="text" 
+                  id="zip-input" 
+                  class="zip-checker__input" 
+                  placeholder="Enter zip code"
+                  maxlength="5"
+                  pattern="[0-9]*"
+                  inputmode="numeric"
+                >
+                <button type="button" id="zip-check-btn" class="btn btn--primary zip-checker__btn">
+                  Check
+                </button>
+              </div>
+              <div id="zip-result" class="zip-checker__result"></div>
+            </div>
+            
+            <div class="service-area__info">
+              <h3>Areas We Serve</h3>
+              <ul class="service-area__list">
+                <li>Joliet & Will County</li>
+                <li>Naperville & DuPage County</li>
+                <li>Bolingbrook & Romeoville</li>
+                <li>Plainfield & Oswego</li>
+                <li>Lockport & Lemont</li>
+                <li>Aurora & surrounding areas</li>
+                <li>Elgin & Schaumburg</li>
+                <li>St. Charles & Batavia</li>
+                <li>DeKalb & Sycamore</li>
+                <li>Orland Park & Tinley Park</li>
+                <li>Chicago Heights & Kankakee</li>
+                <li>Morris & Minooka</li>
+                <li>Ottawa & Streator</li>
+                <li>Wheaton & Glen Ellyn</li>
+                <li>Elmhurst & Lombard</li>
+              </ul>
+              <p class="service-area__note">
+                Not sure? Give us a call—if you're close, we'll make it work.
+              </p>
+            </div>
+          </div>
+          
+          <div class="service-area__map">
+            <svg viewBox="0 0 400 350" class="area-map" aria-label="Service area map showing coverage around Joliet, IL">
+              <!-- Background -->
+              <rect width="400" height="350" fill="#18181b"/>
+              
+              <!-- Lake Michigan -->
+              <path d="M320 0 L400 0 L400 180 L380 200 L360 180 L340 190 L320 170 L310 150 L315 100 L320 50 Z" fill="#1e3a5f" opacity="0.6"/>
+              
+              <!-- Major roads -->
+              <g stroke="#3f3f46" stroke-width="1.5" fill="none" opacity="0.6">
+                <!-- I-90 -->
+                <path d="M60 60 Q200 50 350 80"/>
+                <!-- I-55 -->
+                <path d="M200 0 L200 80 Q180 150 140 250 L100 350"/>
+                <!-- I-80 -->
+                <path d="M0 220 L400 220"/>
+                <!-- I-294 -->
+                <path d="M280 80 Q290 150 300 220"/>
+                <!-- I-355 -->
+                <path d="M200 80 L230 180"/>
+              </g>
+              
+              <!-- Service area polygon -->
+              <polygon 
+                points="120,70 240,60 290,100 300,160 280,220 220,270 140,280 80,260 60,200 70,140 100,100" 
+                fill="url(#serviceGradient)" 
+                stroke="#d4a853" 
+                stroke-width="2.5"
+                class="area-map__zone"
+              />
+              
+              <!-- Gradient definition -->
+              <defs>
+                <linearGradient id="serviceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#d4a853" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#d4a853" stop-opacity="0.08"/>
+                </linearGradient>
+              </defs>
+              
+              <!-- City markers -->
+              <g class="area-map__cities">
+                <!-- Chicago -->
+                <circle cx="300" cy="100" r="6" fill="#fafafa"/>
+                <text x="300" y="88" text-anchor="middle" fill="#fafafa" font-size="13" font-weight="600">Chicago</text>
+                
+                <!-- Joliet - Main hub -->
+                <circle cx="180" cy="210" r="8" fill="#d4a853"/>
+                <circle cx="180" cy="210" r="12" fill="none" stroke="#d4a853" stroke-width="2" opacity="0.5"/>
+                <text x="180" y="235" text-anchor="middle" fill="#d4a853" font-size="13" font-weight="700">Joliet</text>
+                
+                <!-- Naperville -->
+                <circle cx="210" cy="130" r="5" fill="#a1a1aa"/>
+                <text x="210" y="118" text-anchor="middle" fill="#a1a1aa" font-size="11">Naperville</text>
+                
+                <!-- Aurora -->
+                <circle cx="150" cy="110" r="4" fill="#a1a1aa"/>
+                <text x="150" y="98" text-anchor="middle" fill="#a1a1aa" font-size="11">Aurora</text>
+                
+                <!-- Bolingbrook -->
+                <circle cx="230" cy="165" r="4" fill="#a1a1aa"/>
+                <text x="230" y="153" text-anchor="middle" fill="#a1a1aa" font-size="10">Bolingbrook</text>
+                
+                <!-- Plainfield -->
+                <circle cx="160" cy="170" r="4" fill="#a1a1aa"/>
+                <text x="160" y="158" text-anchor="middle" fill="#a1a1aa" font-size="10">Plainfield</text>
+                
+                <!-- Lockport -->
+                <circle cx="200" cy="240" r="4" fill="#a1a1aa"/>
+                <text x="200" y="255" text-anchor="middle" fill="#a1a1aa" font-size="10">Lockport</text>
+              </g>
+              
+              <!-- Highway labels -->
+              <g fill="#71717a" font-size="9" font-weight="600">
+                <text x="55" y="55">90</text>
+                <text x="105" y="320">55</text>
+                <text x="20" y="215">80</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Reviews Section -->
     <section class="reviews" id="reviews">
       <div class="reviews__bg">

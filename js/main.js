@@ -205,6 +205,185 @@
   });
 
   // ========================================
+  // Zip Code Service Area Checker
+  // ========================================
+  const zipInput = document.getElementById('zip-input');
+  const zipCheckBtn = document.getElementById('zip-check-btn');
+  const zipResult = document.getElementById('zip-result');
+
+  // Service area zip codes (Full coverage area from map)
+  const serviceZips = [
+    // Joliet area
+    '60431', '60432', '60433', '60434', '60435', '60436',
+    // Naperville
+    '60540', '60563', '60564', '60565',
+    // Plainfield
+    '60544', '60585', '60586',
+    // Bolingbrook
+    '60440', '60490',
+    // Romeoville
+    '60446',
+    // Lockport
+    '60441',
+    // Shorewood
+    '60404',
+    // Channahon
+    '60410',
+    // Minooka
+    '60447',
+    // Morris
+    '60450',
+    // Oswego
+    '60543',
+    // Yorkville
+    '60560',
+    // Aurora area
+    '60502', '60503', '60504', '60505', '60506', '60507', '60538',
+    // Lemont
+    '60439',
+    // Woodridge
+    '60517',
+    // Downers Grove
+    '60515', '60516',
+    // Lisle
+    '60532',
+    // Warrenville
+    '60555',
+    // Crest Hill
+    '60403',
+    // New Lenox
+    '60451',
+    // Mokena
+    '60448',
+    // Frankfort
+    '60423',
+    // Manhattan
+    '60442',
+    // Elgin
+    '60120', '60121', '60123', '60124',
+    // Schaumburg
+    '60173', '60193', '60194', '60195', '60196',
+    // DeKalb
+    '60115',
+    // St. Charles
+    '60174', '60175',
+    // Batavia
+    '60510',
+    // Sandwich
+    '60548',
+    // Orland Park
+    '60462', '60467',
+    // Chicago Heights
+    '60411',
+    // Bourbonnais
+    '60914',
+    // Kankakee
+    '60901',
+    // Sycamore
+    '60178',
+    // Gardner
+    '60424',
+    // Braceville
+    '60915',
+    // Streator
+    '61364',
+    // Ottawa
+    '61350',
+    // Wheaton
+    '60187', '60189',
+    // Glen Ellyn
+    '60137',
+    // Lombard
+    '60148',
+    // Villa Park
+    '60181',
+    // Elmhurst
+    '60126',
+    // Westmont
+    '60559',
+    // Darien
+    '60561',
+    // Burr Ridge
+    '60527',
+    // Tinley Park
+    '60477', '60487',
+    // Homer Glen
+    '60491',
+    // Geneva
+    '60134',
+    // Carol Stream
+    '60188'
+  ];
+
+  // Extended area (might service, call to confirm - areas just outside main coverage)
+  const extendedZips = [
+    // Areas just outside the main service zone
+    '60007', '60008', '60010', '60018', '60067', '60068', '60069', '60070', '60090', '60091', '60092', '60093', '60094', '60095', '60096', '60097', '60098', '60099',
+    // Far west suburbs
+    '60112', '60113', '60119', '60139', '60145', '60146', '60147', '60151', '60152', '60153', '60154', '60155', '60156', '60157', '60159', '60160', '60161', '60162', '60163', '60164', '60165', '60171', '60172', '60176', '60177', '60179', '60180', '60182', '60183', '60184', '60185', '60186', '60190', '60191', '60192', '60199',
+    // Far south suburbs
+    '60402', '60406', '60407', '60408', '60409', '60412', '60413', '60414', '60415', '60416', '60417', '60418', '60419', '60420', '60421', '60422', '60424', '60425', '60426', '60428', '60429', '60430', '60437', '60438', '60443', '60444', '60445', '60449', '60452', '60453', '60454', '60455', '60456', '60457', '60458', '60459', '60460', '60461', '60463', '60464', '60465', '60466', '60468', '60469', '60470', '60471', '60472', '60473', '60474', '60475', '60476', '60478', '60479', '60480', '60481', '60482', '60499',
+    // Far west/southwest
+    '60501', '60508', '60509', '60511', '60512', '60513', '60514', '60518', '60519', '60520', '60521', '60522', '60523', '60524', '60525', '60526', '60528', '60529', '60530', '60531', '60533', '60534', '60535', '60536', '60537', '60539', '60541', '60542', '60545', '60546', '60547', '60548', '60549', '60550', '60551', '60552', '60553', '60554', '60556', '60557', '60558', '60562', '60566', '60567', '60568', '60569', '60570', '60572', '60597', '60598', '60599',
+    // Kankakee area
+    '60910', '60911', '60912', '60913', '60915', '60916', '60917', '60918', '60919', '60920', '60921', '60922', '60924', '60926', '60927', '60928', '60929', '60930', '60931', '60932', '60933', '60934', '60935', '60936', '60938', '60939', '60940', '60941', '60942', '60943', '60944', '60945', '60946', '60948', '60949', '60950', '60951', '60952', '60953', '60954', '60955', '60956', '60957', '60958', '60959', '60960', '60961', '60962', '60963', '60964', '60966', '60967', '60968', '60969', '60970', '60973', '60974'
+  ];
+
+  function checkZipCode(zip) {
+    zip = zip.trim();
+    
+    if (zip.length !== 5 || !/^\d{5}$/.test(zip)) {
+      return { status: 'invalid', message: 'Please enter a valid 5-digit zip code.' };
+    }
+    
+    if (serviceZips.includes(zip)) {
+      return { 
+        status: 'success', 
+        message: 'Yes! We service your area. Call or text us anytime.' 
+      };
+    }
+    
+    if (extendedZips.includes(zip)) {
+      return { 
+        status: 'maybe', 
+        message: 'We may be able to reach you. Give us a call to confirm!' 
+      };
+    }
+    
+    return { 
+      status: 'error', 
+      message: 'We don\'t typically service that area, but call us anyway—we might be able to help.' 
+    };
+  }
+
+  function displayResult(result) {
+    zipResult.textContent = result.message;
+    zipResult.className = 'zip-checker__result show ' + result.status;
+  }
+
+  if (zipInput && zipCheckBtn && zipResult) {
+    // Only allow numbers
+    zipInput.addEventListener('input', function(e) {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+    });
+
+    // Check on button click
+    zipCheckBtn.addEventListener('click', function() {
+      const result = checkZipCode(zipInput.value);
+      displayResult(result);
+    });
+
+    // Check on Enter key
+    zipInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const result = checkZipCode(zipInput.value);
+        displayResult(result);
+      }
+    });
+  }
+
+  // ========================================
   // Scroll Reveal Animations
   // ========================================
   function initScrollReveal() {
