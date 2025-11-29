@@ -84,6 +84,22 @@
     }
   });
 
+  // Close nav when clicking outside (on backdrop)
+  nav.addEventListener('click', function(e) {
+    // If clicking directly on the nav element (backdrop), close it
+    if (e.target === nav) {
+      closeNav();
+    }
+  });
+
+  // Prevent nav list clicks from closing (they should navigate)
+  const navList = nav.querySelector('.nav__list');
+  if (navList) {
+    navList.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
+
   // ========================================
   // Smooth Scroll with Offset
   // ========================================
