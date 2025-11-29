@@ -1,5 +1,5 @@
 /**
- * Marcus Cole Mobile Mechanic - Main JavaScript
+ * Main JavaScript
  * Handles navigation, scroll effects, form submission, and animations
  */
 
@@ -145,8 +145,6 @@
         `;
         submitBtn.style.background = 'var(--color-success)';
 
-        // Log data (for demo purposes)
-        console.log('Form submitted:', data);
 
         // Reset form after delay
         setTimeout(function() {
@@ -322,18 +320,6 @@
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
     document.body.appendChild(script);
   }
-
-  // ========================================
-  // Console Easter Egg
-  // ========================================
-  console.log(
-    '%c🔧 Marcus Cole Mobile Mechanic',
-    'font-size: 20px; font-weight: bold; color: #d4a853;'
-  );
-  console.log(
-    '%cLooking for a developer? This site was built with vanilla HTML, CSS & JS.',
-    'font-size: 12px; color: #a1a1aa;'
-  );
 
 })();
 
