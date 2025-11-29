@@ -956,7 +956,13 @@
             </div>
           </div>
           
-          <form class="booking-form" id="booking-form" action="#" method="POST">
+          <form class="booking-form" id="booking-form" name="service-request" method="POST" netlify data-netlify="true" data-netlify-honeypot="bot-field">
+            <!-- Hidden honeypot field for spam protection -->
+            <input type="hidden" name="form-name" value="service-request">
+            <p style="display: none;">
+              <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+            
             <div class="form-group">
               <label for="name" class="form-label">Your Name</label>
               <input type="text" id="name" name="name" class="form-input" required autocomplete="name">

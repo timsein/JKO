@@ -110,7 +110,7 @@
   });
 
   // ========================================
-  // Form Submission
+  // Form Submission (Netlify Forms)
   // ========================================
   if (bookingForm) {
     bookingForm.addEventListener('submit', function(e) {
@@ -132,29 +132,51 @@
 
       // Collect form data
       const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
 
-      // Simulate form submission (replace with actual API call)
-      setTimeout(function() {
-        // Success state
+      // Submit to Netlify
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      })
+      .then(function(response) {
+        if (response.ok) {
+          // Success state
+          submitBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 10l3.5 3.5 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Request Sent!
+          `;
+          submitBtn.style.background = 'var(--color-success)';
+
+          // Reset form after delay
+          setTimeout(function() {
+            bookingForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalContent;
+            submitBtn.style.background = '';
+          }, 3000);
+        } else {
+          throw new Error('Form submission failed');
+        }
+      })
+      .catch(function(error) {
+        // Error state
         submitBtn.innerHTML = `
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M5 10l3.5 3.5 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 5l10 10M15 5l-10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
-          Request Sent!
+          Error - Try Again
         `;
-        submitBtn.style.background = 'var(--color-success)';
-
-
-        // Reset form after delay
+        submitBtn.style.background = 'var(--color-error)';
+        
         setTimeout(function() {
-          bookingForm.reset();
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalContent;
           submitBtn.style.background = '';
         }, 3000);
-
-      }, 1500);
+      });
     });
 
     // Phone number formatting
