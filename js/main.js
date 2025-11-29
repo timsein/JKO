@@ -161,7 +161,7 @@
           throw new Error('Form submission failed');
         }
       })
-      .catch(function(error) {
+      .catch(function() {
         // Error state
         submitBtn.innerHTML = `
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -479,48 +479,4 @@
     }
   }, { passive: true });
 
-  // ========================================
-  // Accessibility: Focus Management
-  // ========================================
-  // Trap focus within mobile nav when open
-  function trapFocus(element) {
-    const focusableElements = element.querySelectorAll(
-      'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-    );
-    const firstFocusable = focusableElements[0];
-    const lastFocusable = focusableElements[focusableElements.length - 1];
-
-    element.addEventListener('keydown', function(e) {
-      if (e.key !== 'Tab') return;
-
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusable) {
-          lastFocusable.focus();
-          e.preventDefault();
-        }
-      } else {
-        if (document.activeElement === lastFocusable) {
-          firstFocusable.focus();
-          e.preventDefault();
-        }
-      }
-    });
-  }
-
-  // ========================================
-  // Performance: Lazy load images
-  // ========================================
-  if ('loading' in HTMLImageElement.prototype) {
-    const images = document.querySelectorAll('img[loading="lazy"]');
-    images.forEach(function(img) {
-      img.src = img.dataset.src;
-    });
-  } else {
-    // Fallback for browsers that don't support lazy loading
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-    document.body.appendChild(script);
-  }
-
 })();
-
